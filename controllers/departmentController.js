@@ -95,21 +95,28 @@ export const deleteDepartment = async (req, res) => {
 
     // Validate that the ID is a valid MongoDB ObjectId
     if (!id || !id.match(/^[0-9a-fA-F]{24}$/)) {
-      return res.status(400).json({ success: false, error: "Invalid department ID" });
+      return res
+        .status(400)
+        .json({ success: false, error: "Invalid department ID" });
     }
 
     // Find the department first
     const department = await Department.findById(id);
     if (!department) {
-      return res.status(404).json({ success: false, error: "Department not found" });
+      return res
+        .status(404)
+        .json({ success: false, error: "Department not found" });
     }
 
     // Call deleteOne() on the document instance to trigger the middleware
     await department.deleteOne();
-    res.status(200).json({ success: true, message: "Department deleted successfully" });
+    res
+      .status(200)
+      .json({ success: true, message: "Department deleted successfully" });
   } catch (error) {
     console.error("Error deleting department:", error);
-    res.status(500).json({ success: false, error: "Error deleting department" });
+    res
+      .status(500)
+      .json({ success: false, error: "Error deleting department" });
   }
 };
-

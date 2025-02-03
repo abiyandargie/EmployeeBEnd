@@ -1,5 +1,5 @@
 import User from "../models/Users.js";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 const changePassword = async (req, res) => {
   try {
@@ -30,22 +30,18 @@ const changePassword = async (req, res) => {
 
     // Ensure new password is different from the old password
     if (oldPassword === newPassword) {
-      return res
-        .status(400)
-        .json({
-          success: false,
-          error: "New password must be different from the old password",
-        });
+      return res.status(400).json({
+        success: false,
+        error: "New password must be different from the old password",
+      });
     }
 
     // Validate new password length
     if (newPassword.length < 6) {
-      return res
-        .status(400)
-        .json({
-          success: false,
-          error: "New password must be at least 6 characters long",
-        });
+      return res.status(400).json({
+        success: false,
+        error: "New password must be at least 6 characters long",
+      });
     }
 
     // Hash the new password

@@ -1,7 +1,7 @@
-import User from '../models/Users.js';
-import bcrypt from 'bcrypt';
-import { response } from 'express';
-import jwt from 'jsonwebtoken';
+import User from "../models/Users.js";
+import bcrypt from "bcrypt";
+import { response } from "express";
+import jwt from "jsonwebtoken";
 
 const login = async (req, res) => {
   try {
@@ -39,7 +39,7 @@ const login = async (req, res) => {
 };
 
 const verify = (req, res) => {
-  return res.status(200).json({success: true,user: req.user})
-}
+  return res.status(200).json({ success: true, user: req.user });
+};
 
 export { login, verify };
