@@ -13,39 +13,49 @@ import { connectToDatabase, createAdminUserIfNeeded } from "./db/db.js";
 dotenv.config();
 
 // Connect to MongoDB
-connectToDatabase();
-createAdminUserIfNeeded();
+const startServer = async () => {
+  try {
+    await connectToDatabase();
+    await createAdminUserIfNeeded();
 
-const app = express();
+    const app = express();
 
-// Middleware
-app.use(
-  cors({
-    origin: "https://frontend-ma3z.vercel.app",
-    credentials: true,
-  })
-);
-app.use(express.json());
-app.use(express.static("public/uploads"));
+    // Middleware
+    app.use(
+      cors({
+        origin: "https://frontend-ma3z.vercel.app",
+        credentials: true,
+      })
+    );
+    app.use(express.json());
+    app.use(express.static("public/uploads"));
 
-// Test route to check if the server is running
-app.get("/", (req, res) => {
-  res.send("API is running...");
-});
+    // Test route to check if the server is running
+    app.get("/", (req, res) => {
+      res.send("API is running...");
+    });
 
-// API Routes
-app.use("/api/auth", authRouter);
-app.use("/api/department", departmentRouter);
-app.use("/api/dashboard", dashboardRouter);
-app.use("/api/employee", employeeRouter);
-app.use("/api/salary", salaryRouter);
-app.use("/api/leave", leaveRouter);
-app.use("/api/setting", settingRouter);
+    // API Routes
+    app.use("/api/auth", authRouter);
+    app.use("/api/department", departmentRouter);
+    app.use("/api/dashboard", dashboardRouter);
+    app.use("/api/employee", employeeRouter);
+    app.use("/api/salary", salaryRouter);
+    app.use("/api/leave", leaveRouter);
+    app.use("/api/setting", settingRouter);
 
-// Set default port for local development
-const PORT = process.env.PORT || 3000;
+    // Set default port for local development
+    const PORT = process.env.PORT || 3000;
+
+    // Start the server
+    app.listen(PORT, () => {
+      console.log(`✅ Server is running on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error("❌ Server startup error:", error);
+    process.exit(1);
+  }
+};
 
 // Start the server
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+startServer();

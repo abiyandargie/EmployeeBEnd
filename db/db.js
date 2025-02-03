@@ -8,9 +8,9 @@ export const connectToDatabase = async () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
+    console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
-    console.error("Error connecting to MongoDB:", error);
+    console.error("❌ Error connecting to MongoDB:", error);
     process.exit(1);
   }
 };
@@ -20,7 +20,7 @@ export const createAdminUserIfNeeded = async () => {
     const adminUser = await User.findOne({ role: "admin" });
 
     if (!adminUser) {
-      console.log("No admin user found. Creating one...");
+      console.log("ℹ️ No admin user found. Creating one...");
 
       const hashedPassword = await bcrypt.hash("admin123", 10);
 
@@ -32,14 +32,11 @@ export const createAdminUserIfNeeded = async () => {
       });
 
       await newAdminUser.save();
-      console.log("Admin user created successfully!");
+      console.log("✅ Admin user created successfully!");
     } else {
-      console.log("Admin user already exists!");
+      console.log("✅ Admin user already exists!");
     }
   } catch (error) {
-    console.error("Error creating admin user:", error);
+    console.error("❌ Error creating admin user:", error);
   }
 };
-
-// Export as named exports
-export { connectToDatabase };
