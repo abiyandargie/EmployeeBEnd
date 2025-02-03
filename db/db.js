@@ -20,7 +20,7 @@ const connectToDatabase = async () => {
       const hashedPassword = await bcrypt.hash("admin123", 10);
       const newUser = new User({
         name: "Admin",
-        email: "admin@gmail.com",
+        email: "admin@example.com", // Change this to a real email
         password: hashedPassword,
         role: "admin",
       });
