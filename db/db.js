@@ -1,7 +1,20 @@
+import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
-import User from "../models/Users.js"; // Adjust path if needed
+import User from "../models/UserModel.js"; // Adjust the path if needed
 
-// Function to create an admin user if it doesn't exist
+export const connectToDatabase = async () => {
+  try {
+    const conn = await mongoose.connect(process.env.MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
+  } catch (error) {
+    console.error("Error connecting to MongoDB:", error);
+    process.exit(1);
+  }
+};
+
 export const createAdminUserIfNeeded = async () => {
   try {
     const adminUser = await User.findOne({ role: "admin" });
@@ -9,12 +22,12 @@ export const createAdminUserIfNeeded = async () => {
     if (!adminUser) {
       console.log("No admin user found. Creating one...");
 
-      const hashedPassword = await bcrypt.hash("admin123", 10); // Hash the password before saving
+      const hashedPassword = await bcrypt.hash("admin123", 10);
 
       const newAdminUser = new User({
         name: "Admin",
-        email: "admin@domain.com", // You can replace with environment variable
-        password: hashedPassword, // Save the hashed password
+        email: "admin@domain.com",
+        password: hashedPassword,
         role: "admin",
       });
 
@@ -27,3 +40,6 @@ export const createAdminUserIfNeeded = async () => {
     console.error("Error creating admin user:", error);
   }
 };
+
+// Export as named exports
+export { connectToDatabase };
