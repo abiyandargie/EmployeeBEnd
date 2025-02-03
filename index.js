@@ -8,12 +8,12 @@ import leaveRouter from "./routes/leave.js";
 import salaryRouter from "./routes/salary.js";
 import settingRouter from "./routes/setting.js";
 import dashboardRouter from "./routes/dashboard.js";
-import connectToDatabase from "./db/db.js";
+import createAdminUserIfNeeded from "./db/db.js";
 
 dotenv.config();
 
 // Connect to MongoDB
-connectToDatabase();
+createAdminUserIfNeeded();
 
 const app = express();
 
