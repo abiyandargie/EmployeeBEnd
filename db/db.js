@@ -9,18 +9,18 @@ const connectToDatabase = async () => {
   try {
     // Connect to the MongoDB database
     await mongoose.connect(process.env.MONGODB_URL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
+      useNewUrlParser: true, // No longer necessary but can be kept for older drivers
+      useUnifiedTopology: true, // No longer necessary but can be kept for older drivers
     });
     console.log("MongoDB Connected");
 
     // Ensure an admin user exists
-    const adminExists = await User.findOne({ email: "admin@example.com" });
+    const adminExists = await User.findOne({ email: "admin@gmail.com" });
     if (!adminExists) {
       const hashedPassword = await bcrypt.hash("admin123", 10);
       const newUser = new User({
         name: "Admin",
-        email: "admin@example.com", // Change this to a real email
+        email: "admin@gmail.com", // Change this to a real email
         password: hashedPassword,
         role: "admin",
       });
