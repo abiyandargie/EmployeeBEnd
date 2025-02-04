@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
-import User from "../models/UserModel.js"; // Adjust the path if needed
+import User from "../models/Users.js"; // Adjust the path if needed
 
 export const connectToDatabase = async () => {
   try {
