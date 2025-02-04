@@ -4,7 +4,7 @@ import User from "../models/Users.js"; // Adjust the path if needed
 
 export const connectToDatabase = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGO_URI, {
+    const conn = await mongoose.connect(process.env.MONGO_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
